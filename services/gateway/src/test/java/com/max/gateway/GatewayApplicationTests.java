@@ -1,10 +1,10 @@
-package com.max.services;
+package com.max.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServicesApplicationTests {
+class GatewayApplicationTests {
 
     @Test
     void contextLoads() {

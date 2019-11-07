@@ -1,0 +1,10 @@
+server:
+  port: ${PORT:10000}
+
+
+
+zuul:
+  routes:
+    example:
+      path: /example/**
+      url: http://test-service:8099/hello
