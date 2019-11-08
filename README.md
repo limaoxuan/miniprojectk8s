@@ -1,14 +1,14 @@
 # miniprojectk8s
 
-external port
+External port
 
-gateway  port: 33333
+gateway  port: 30005
 
-Internal port
+Internal container port
 
-gateway port: 10000 
+gateway port: 9000 
 
-auth port : 10001
+auth port : 9001
 
-account port : 10002
+account port : 9002
 
