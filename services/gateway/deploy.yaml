@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ea-gateway
+  labels:
+    app: ea-gateway
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: ea-gateway
+      labels:
+        app: ea-gateway
+    spec:
+      containers:
+        - name: ea-gateway
+          image: life14ok/ea-gateway
+          ports:
+            - containerPort: 9000
+          env:
+            - name: "PORT"
+              value: "10000"
+  selector:
+    matchLabels:
+      app: ea-gateway
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ea-gateway-service
+spec:
+  selector:
+    app: ea-gateway
+  ports:
+    - port: 9000
+      targetPort: 10000
+      nodePort: 30005
+  type: NodePort

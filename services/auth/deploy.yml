@@ -16,10 +16,10 @@ spec:
         - name: ea-auth
           image: life14ok/ea-auth
           ports:
-            - containerPort: 8080
+            - containerPort: 10001
           env:
             - name: "PORT"
-              value: "10000"
+              value: "10001"
   selector:
     matchLabels:
       app: ea-auth
@@ -32,6 +32,6 @@ spec:
   selector:
     app: ea-auth
   ports:
-    - port: 8080
-      targetPort: 10000
+    - port: 10001
+      targetPort: 10001
   type: ClusterIP # internal

@@ -27,6 +27,11 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
+    @RequestMapping("/hello")
+    public String hello() {
+        return "hello";
+    }
+
     @PostMapping("/register")
     public ResultVO<String> register(@RequestBody Account account) {
         accountService.save(account);

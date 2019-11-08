@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ea-account
+  labels:
+    app: ea-account
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: ea-account
+      labels:
+        app: ea-account
+    spec:
+      containers:
+        - name: ea-account
+          image: life14ok/ea-account
+          ports:
+            - containerPort: 9002
+          env:
+            - name: "PORT"
+              value: "10002"
+            - name: "DATABASE_HOST"
+              value: "ea-mysql-service"
+            - name: "DATABASE_PORT"
+              value: "3306"
+  selector:
+    matchLabels:
+      app: ea-account
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ea-account-service
+spec:
+  selector:
+    app: ea-account
+  ports:
+    - port: 9002
+      targetPort: 10002
+  type: ClusterIP

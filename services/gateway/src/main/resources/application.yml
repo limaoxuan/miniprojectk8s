@@ -9,9 +9,6 @@ zuul:
     account:
       path: ${spring.data.rest.base-path}/account/**
       url: http://localhost:10002/account
-#  ignored-patterns:
-#    - /account/login
-#    - /account/regiter
 spring:
   data:
     rest:

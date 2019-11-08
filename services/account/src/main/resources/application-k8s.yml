@@ -5,15 +5,15 @@ spring:
     database: mysql
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DATABASE_HOST:localhost}:${DATABASE_PORT:3309}/account?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:${DATABASE_PORT:3306}/account?autoReconnect=true&useSSL=false
     username: root
     password: 123456
 router:
   auth:
-    url: http://localhost:10001
+    url: http://ea-auth-service:10001
 
