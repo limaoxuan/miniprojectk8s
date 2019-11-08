@@ -1,8 +1,14 @@
 server:
   port: ${PORT:10000}
-
 zuul:
   routes:
     example:
       path: /example/**
-      url: http://localhost:8099/
+      url: http://localhost:8099/hello
+    user:
+      path: /user/**
+      url: http://localhost:8100/user
+  ignored-patterns:
+    - /user/login
+    - /user/regiter
+

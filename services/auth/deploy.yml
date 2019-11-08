@@ -34,5 +34,4 @@ spec:
   ports:
     - port: 8080
       targetPort: 10000
-      nodePort: 30000
-  type: NodePort
+  type: ClusterIP # internal
