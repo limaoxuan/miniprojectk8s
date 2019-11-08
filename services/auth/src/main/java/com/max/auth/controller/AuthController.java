@@ -9,23 +9,32 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.security.Key;
+import java.util.Date;
 
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private long ttl = 3600000;//3600s
 
     //    Keys.
     @PostMapping("/gen_token")
-    public ResultVO<AuthVO> genToken() {
-        ResultVO<AuthVO> resultVO = new ResultVO<>();
-        resultVO.setCode(0);
-        resultVO.setMsg("success");
-        AuthVO authVO = new AuthVO();
-        authVO.setToken(Jwts.builder().setId("1").setSubject("hello").signWith(key).compact());
-        resultVO.setData(authVO);
-        return resultVO;
+    public String genToken(String id, String email, String role) {
+        long nowMillis = System.currentTimeMillis();
+        Date now = new Date(nowMillis);
+//        ResultVO<AuthVO> resultVO = new ResultVO<>();
+//        resultVO.setCode(0);
+//        resultVO.setMsg("success");
+
+//        AuthVO authVO = new AuthVO();
+        JwtBuilder builder = Jwts.builder().setId(id).setSubject(email).setIssuedAt(now).signWith(key).claim("role", role);
+        if (ttl > 0) {
+            builder.setExpiration(new Date(nowMillis + ttl));
+        }
+//        authVO.setToken(builder.compact());
+//        resultVO.setData(authVO);
+        return builder.compact();
     }
 
     @PostMapping("/valid_token")
@@ -34,7 +43,7 @@ public class AuthController {
         Claims body = null;
         try {
 
-             body = Jwts.parser().setSigningKey(key).parseClaimsJws(tokenDTO.getToken()).getBody();
+            body = Jwts.parser().setSigningKey(key).parseClaimsJws(tokenDTO.getToken()).getBody();
 
         } catch (MissingClaimException mce) {
             // the parsed JWT did not have the sub field
