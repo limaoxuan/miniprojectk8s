@@ -16,3 +16,6 @@ spring:
 router:
   auth:
     url: http://localhost:10001
+api:
+  key: ea-max-secret
+

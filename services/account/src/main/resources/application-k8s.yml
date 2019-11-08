@@ -16,4 +16,8 @@ spring:
 router:
   auth:
     url: http://ea-auth-service:10001
+api:
+  key: ${API-KEY}
+
+  ea-max-secret
 

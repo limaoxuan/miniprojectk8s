@@ -5,6 +5,7 @@ import com.max.account.domain.Account;
 import com.max.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,6 +54,7 @@ public class AccountController {
         resultVO.setMsg("fail");
         if (myAccount != null) {
             resultVO.setMsg("success");
+//            HttpEntity httpEntity =
             ResponseEntity<String> response
                     = restTemplate.postForEntity(authUrl + "/auth/gen_token", myAccount, String.class);
             hashMap.put("token", response.getBody());

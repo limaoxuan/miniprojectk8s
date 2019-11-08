@@ -18,6 +18,11 @@ spec:
           ports:
             - containerPort: 9002
           env:
+            - name: "API-KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: ea-secret
+                  key: service-api-key
             - name: "PORT"
               value: "10002"
             - name: "DATABASE_HOST"
