@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ea-auth
+  labels:
+    app: ea-auth
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: ea-auth
+      labels:
+        app: ea-auth
+    spec:
+      containers:
+        - name: ea-auth
+          image: life14ok/ea-auth
+          ports:
+            - containerPort: 8080
+          env:
+            - name: "PORT"
+              value: "10000"
+  selector:
+    matchLabels:
+      app: ea-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ea-auth-service
+spec:
+  selector:
+    app: ea-auth
+  ports:
+    - port: 8080
+      targetPort: 10000
+      nodePort: 30000
+  type: NodePort
