@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ea-mysql-deployment
+  labels:
+    app: ea-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ea-mysql
+  template:
+    metadata:
+      labels:
+        app: ea-mysql
+    spec:
+      containers:
+        - name: ea-mysql
+          image: mysql:5.7
+          ports:
+            - containerPort: 3306
+          env:
+            - name: "MYSQL_ROOT_PASSWORD"
+              value: "12345678"
+            - name: "MYSQL_DATABASE"
+              value: "ea_skeleton"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ea-mysql-service
+spec:
+  type: NodePort
+  selector:
+    app: ea-mysql
+  ports:
+    - port: 3306 # service port cluster inside
+      targetPort: 3306 #
+      nodePort: 30306

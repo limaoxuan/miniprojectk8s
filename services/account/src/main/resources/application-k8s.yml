@@ -19,5 +19,4 @@ router:
 api:
   key: ${API-KEY}
 
-  ea-max-secret
 

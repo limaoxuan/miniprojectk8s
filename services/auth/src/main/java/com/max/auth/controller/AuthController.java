@@ -23,17 +23,10 @@ public class AuthController {
     public String genToken(String id, String email, String role) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-//        ResultVO<AuthVO> resultVO = new ResultVO<>();
-//        resultVO.setCode(0);
-//        resultVO.setMsg("success");
-
-//        AuthVO authVO = new AuthVO();
         JwtBuilder builder = Jwts.builder().setId(id).setSubject(email).setIssuedAt(now).signWith(key).claim("role", role);
         if (ttl > 0) {
             builder.setExpiration(new Date(nowMillis + ttl));
         }
-//        authVO.setToken(builder.compact());
-//        resultVO.setData(authVO);
         return builder.compact();
     }
 

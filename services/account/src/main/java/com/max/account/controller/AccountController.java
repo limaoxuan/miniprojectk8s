@@ -1,12 +1,17 @@
 package com.max.account.controller;
 
+import com.google.gson.Gson;
 import com.max.account.VO.ResultVO;
 import com.max.account.domain.Account;
 import com.max.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,11 @@ public class AccountController {
 
     @Value("${router.auth.url}")
     private String authUrl;
+
+    @Value("${api.key}")
+    private String apiKey;
+
+    private Gson gson = new Gson();
 
     @Autowired
     RestTemplate restTemplate;
@@ -54,11 +64,20 @@ public class AccountController {
         resultVO.setMsg("fail");
         if (myAccount != null) {
             resultVO.setMsg("success");
-//            HttpEntity httpEntity =
-            ResponseEntity<String> response
-                    = restTemplate.postForEntity(authUrl + "/auth/gen_token", myAccount, String.class);
+            ResponseEntity<String> response = request(authUrl + "/auth/gen_token", gson.toJson(myAccount));
             hashMap.put("token", response.getBody());
         }
         return resultVO;
+    }
+
+    private ResponseEntity<String> request(String authUrl, String data) {
+        HttpHeaders headers = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+        headers.setContentType(type);
+        headers.add("Accept", MediaType.APPLICATION_JSON.toString());
+        headers.add("api-key", apiKey);
+        //HttpEntity
+        HttpEntity<String> formEntity = new HttpEntity<>(data, headers);
+        return restTemplate.postForEntity(authUrl, formEntity, String.class);
     }
 }

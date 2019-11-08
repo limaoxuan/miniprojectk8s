@@ -1,7 +1,8 @@
-package com.max.account.interceptor;
+package com.max.auth.interceptor;
+
 
 import com.google.gson.Gson;
-import com.max.account.VO.ResultVO;
+import com.max.auth.VO.ResultVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
