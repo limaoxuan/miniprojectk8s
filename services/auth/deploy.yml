@@ -32,6 +32,6 @@ spec:
   selector:
     app: ea-auth
   ports:
-    - port: 10001
+    - port: 9001
       targetPort: 10001
   type: ClusterIP # internal

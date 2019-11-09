@@ -1,40 +1,16 @@
-
 server:
   port: ${PORT:10000}
-spring:
-  data:
-    rest:
-      base-path: /api
-base-paths:
-  account:
-    url: http://localhost:10002/account
-  auth:
-    url: http://localhost:10001/auth
-  example:
-    url: http://localhost:8099/hello
 
 zuul:
   routes:
     example:
-      path: ${spring.data.rest.base-path}/example/**
-      url: ${base-paths.example.url}
+      path: /api/example/**
+      url: http://localhost:8099/hello
     account:
-      path: ${spring.data.rest.base-path}/account/**
-      url: ${base-paths.account.url}
+      path: /api/account/**
+      url: http://localhost:10002/account/
 
-
-
-account-routes:
-  login:
-    url: ${base-paths.account.url}/login
-  register:
-    url: ${base-paths.account.url}/register
-
-auth-routes:
-  gen-token:
-    url: ${base-paths.auth.url}/gen_token
-  valid-token:
-    url: ${base-paths.auth.url}/valid_token
+auth-url: http://localhost:10001/auth
 
 exclude-routes:
     urls: http://localhost:10000/api/account/login,http://localhost:10000/api/account/register

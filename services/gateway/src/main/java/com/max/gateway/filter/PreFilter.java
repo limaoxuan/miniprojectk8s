@@ -21,7 +21,7 @@ public class PreFilter extends ZuulFilter {
     @Value("${exclude-routes.urls}")
     private String excludeUrls;
 
-    @Value("${auth-routes.valid-token.url}")
+    @Value("${auth-url}")
     private String authUrl;
 
     @Value("${api.key}")
@@ -75,8 +75,7 @@ public class PreFilter extends ZuulFilter {
         HashMap<String, String> map = new HashMap<>();
         map.put("token", token);
         String jsonStr = gson.toJson(map);
-//        System.out.println(jsonStr);
-        ResponseEntity<String> request1 = request(authUrl, jsonStr);
+        ResponseEntity<String> request1 = request(authUrl +"/valid_token", jsonStr);
         System.out.println("sds");
         System.out.println(request1.getBody());
         ResultVO<Boolean> booleanResultVO = gson.fromJson(request1.getBody(), ResultVO.class);
