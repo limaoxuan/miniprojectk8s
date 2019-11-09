@@ -13,3 +13,8 @@ spring:
   data:
     rest:
       base-path: /api
+router:
+  auth:
+    url: http://ea-auth-service:10001
+api:
+  key: ${API-KEY}
