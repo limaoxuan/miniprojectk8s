@@ -39,27 +39,29 @@ public class AuthController {
         System.out.println(tokenDTO.getToken());
         Jws<Claims> jws;
         ResultVO<Boolean> resultVO = new ResultVO<>();
+        resultVO.setCode(1);
+        resultVO.setMsg("invalid token");
+        resultVO.setData(false);
         try {
             jws = Jwts.parser()
                     .setSigningKey(key)
                     .parseClaimsJws(tokenDTO.getToken());
             System.out.println(jws.getBody().getSubject());
-
+            resultVO.setCode(0);
+            resultVO.setMsg("valid token");
+            resultVO.setData(true);
         } catch (MissingClaimException mce) {
             // the parsed JWT did not have the sub field
             System.out.println("mce");
         } catch (IncorrectClaimException ice) {
             // the parsed JWT had a sub field, but its value was not equal to 'jsmith'
             System.out.println("ice");
+        } catch (Exception e) {
+
         } finally {
 
-            resultVO.setCode(0);
-            resultVO.setMsg("invalid token");
-            resultVO.setData(false);
-            return resultVO;
         }
-
-
+        return resultVO;
     }
 
 

@@ -7,10 +7,7 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +48,7 @@ public class PreFilter extends ZuulFilter {
     }
 
     @Override
-    public Object run() throws ZuulException {
+    public Object run() throws ZuulException{
 
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
@@ -66,32 +63,45 @@ public class PreFilter extends ZuulFilter {
         System.out.println("sds");
         String token = request.getHeader("token");
         if (token == null) {
-            HttpServletResponse response = ctx.getResponse();
             ResultVO<String> resultVO = new ResultVO<>();
             resultVO.setData("{}");
             resultVO.setMsg("Api key invalid");
             resultVO.setCode(0);
             String resJsonString = this.gson.toJson(resultVO);
-            PrintWriter out = null;
-            try {
-                out = response.getWriter();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            out.print(resJsonString);
-            out.flush();
+            output(ctx, resJsonString);
+            return null;
         }
 
         HashMap<String, String> map = new HashMap<>();
         map.put("token", token);
         String jsonStr = gson.toJson(map);
-        System.out.println(jsonStr);
+//        System.out.println(jsonStr);
         ResponseEntity<String> request1 = request(authUrl, jsonStr);
+        System.out.println("sds");
         System.out.println(request1.getBody());
-
+        ResultVO<Boolean> booleanResultVO = gson.fromJson(request1.getBody(), ResultVO.class);
+        String resJsonString = this.gson.toJson(booleanResultVO);
+        System.out.println(resJsonString);
+        System.out.println("resJsonString");
+        if (booleanResultVO.getCode() == 1) {
+            output(ctx, resJsonString);
+        }
+        System.out.println("ds");
         return null;
+    }
+
+    private void output(RequestContext ctx , String resJsonString) {
+        ctx.setSendZuulResponse(false);
+        ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+        PrintWriter out = null;
+        try {
+            out = ctx.getResponse().getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ctx.getResponse().setContentType("application/json");
+        ctx.getResponse().setCharacterEncoding("UTF-8");
+        out.write(resJsonString);
     }
 
 
