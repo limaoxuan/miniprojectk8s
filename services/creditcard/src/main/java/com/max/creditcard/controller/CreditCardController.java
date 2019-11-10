@@ -1,17 +1,14 @@
-package com.max.paypal.controller;
+package com.max.creditcard.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequestMapping
-
-public class PaypalController {
-
+@RestController
+public class CreditCardController {
 
     @RequestMapping("/pay")
     public String pay() {
-        return "Paypal success";
+        return "creditcard success";
     }
-
 }
