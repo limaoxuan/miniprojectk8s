@@ -12,12 +12,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_email")
+    private String userEmail;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProductList;
 
+
+    @Column(name = "ship_address")
+    private String shipAddress;
+
+    @Column(name = "payment_method")
+    private String paymentMethod;
 
     private String status;
 
