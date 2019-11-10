@@ -3,7 +3,7 @@ server:
 spring:
   jpa:
     database: mysql
-    generate-ddl: true
+#    generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true

@@ -16,5 +16,7 @@ public class OrderProduct {
 
     private Integer units;
 
+    private Long productId;
+
     private double price;
 }

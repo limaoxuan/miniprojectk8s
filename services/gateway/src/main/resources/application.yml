@@ -12,6 +12,12 @@ zuul:
     payment:
       path: /api/payment/**
       url: http://localhost:10010/payment/
+    product:
+      path: /api/product/**
+      url: http://localhost:10003/product/
+    order:
+      path: /api/order/**
+      url: http://localhost:10004/order/
 
 auth-url: http://localhost:10001/auth
 

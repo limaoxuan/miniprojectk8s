@@ -1,6 +1,7 @@
 package com.max.product.controller;
 
 import com.max.product.VO.ProductsVO;
+import com.max.product.VO.ResultMessage;
 import com.max.product.VO.ResultVO;
 import com.max.product.domain.Product;
 import com.max.product.service.ProductService;
@@ -31,13 +32,28 @@ public class ProductController {
         return resultVO;
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResultVO<?> addProduct(@RequestBody Product product) {
-        productService.addProduct(product);
+        productService.save(product);
         ResultVO<String> resultVO = new ResultVO<>();
         resultVO.setCode(0);
         resultVO.setMsg("success");
         resultVO.setData("{}");
         return resultVO;
     }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResultVO<?> updateProduct(@RequestBody Product product) {
+        Product product1 = productService.getOne(product.getId());
+        if (product1.getProductStock() < product.getProductStock()) {
+
+            return ResultMessage.normalReturn("beyond stock");
+        }
+        Integer stock = product1.getProductStock() - product.getProductStock();
+        product.setProductStock(stock);
+        productService.save(product);
+        return ResultMessage.normalReturn();
+    }
+
 
 }

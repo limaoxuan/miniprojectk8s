@@ -1,14 +1,4 @@
 
-
-payment:
-  url: http://localhost:10010/payment
-product:
-  url: http://localhost:10003/product
-
-api:
-  key: ea-max-secret
-
-
 spring:
   jpa:
     database: mysql
@@ -22,4 +12,7 @@ spring:
     username: root
     password: 123456
 server:
-  port: 10004
+  port: 10003
+
+api:
+  key: ea-max-secret

@@ -17,8 +17,11 @@ public class ProductService {
         return productDao.findAll();
     }
 
-    public void addProduct(Product product) {
+    public void save(Product product) {
         productDao.save(product);
     }
 
+    public Product getOne(Long id) {
+        return productDao.getOne(id);
+    }
 }

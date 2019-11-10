@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductDao extends JpaRepository<Product,String>, JpaSpecificationExecutor<Product> {
+public interface ProductDao extends JpaRepository<Product,Long>, JpaSpecificationExecutor<Product> {
 }
