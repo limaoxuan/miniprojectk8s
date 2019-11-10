@@ -9,6 +9,9 @@ zuul:
     account:
       path: /api/account/**
       url: http://localhost:10002/account/
+    payment:
+      path: /api/payment/**
+      url: http://localhost:10010/payment/
 
 auth-url: http://localhost:10001/auth
 

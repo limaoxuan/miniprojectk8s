@@ -1,7 +1,7 @@
-package com.max.paypal.interceptor;
+package com.max.bank.interceptor;
 
 import com.google.gson.Gson;
-import com.max.paypal.VO.ResultVO;
+import com.max.bank.VO.ResultVO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,7 +20,6 @@ public class ApiKeyInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println(apiKey);
         String sendApiKey = request.getHeader("api-key");
-        System.out.println(sendApiKey);
         if (!apiKey.equals(sendApiKey)) {
             ResultVO<String> resultVO = new ResultVO<>();
             resultVO.setData("{}");

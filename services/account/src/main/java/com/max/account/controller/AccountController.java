@@ -50,8 +50,8 @@ public class AccountController {
         return ResultMessage.normalReturn();
     }
 
-    @RequestMapping(value = "/email",method = RequestMethod.POST)
-    public ResultVO<?>  addAddress(@RequestHeader("user-email") String email,@RequestBody Address address){
+    @RequestMapping(value = "/email", method = RequestMethod.POST)
+    public ResultVO<?> addAddress(@RequestHeader("user-email") String email, @RequestBody Address address) {
 
         System.out.println(email);
         Account account = accountService.findAccountByEmail(email);
@@ -62,9 +62,15 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResultVO<HashMap<String, String>> login(@RequestBody Account account) {
+    public ResultVO<?> login(@RequestBody Account account) {
         System.out.println(authUrl);
         Account myAccount = accountService.login(account);
+        System.out.println(myAccount);
+        System.out.println("myAccount");
+        if (myAccount == null) {
+            return ResultMessage.normalReturn("username password wrong");
+        }
+
         ResultVO<HashMap<String, String>> resultVO = new ResultVO<>();
         resultVO.setCode(0);
         HashMap<String, String> hashMap = new HashMap<>();
