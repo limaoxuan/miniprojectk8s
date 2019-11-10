@@ -34,14 +34,14 @@ public class AuthController {
     }
 
     @PostMapping("/valid_token")
-    public ResultVO<Boolean> validToken(@RequestBody TokenDTO tokenDTO) {
+    public ResultVO<String> validToken(@RequestBody TokenDTO tokenDTO) {
         System.out.println("valid_token");
         System.out.println(tokenDTO.getToken());
         Jws<Claims> jws;
-        ResultVO<Boolean> resultVO = new ResultVO<>();
+        ResultVO<String> resultVO = new ResultVO<>();
         resultVO.setCode(1);
         resultVO.setMsg("invalid token");
-        resultVO.setData(false);
+        resultVO.setData("{}");
         try {
             jws = Jwts.parser()
                     .setSigningKey(key)
@@ -49,7 +49,7 @@ public class AuthController {
             System.out.println(jws.getBody().getSubject());
             resultVO.setCode(0);
             resultVO.setMsg("valid token");
-            resultVO.setData(true);
+            resultVO.setData(jws.getBody().getSubject());
         } catch (MissingClaimException mce) {
             // the parsed JWT did not have the sub field
             System.out.println("mce");

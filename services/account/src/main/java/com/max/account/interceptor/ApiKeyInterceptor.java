@@ -33,6 +33,7 @@ public class ApiKeyInterceptor implements HandlerInterceptor {
             out.flush();
             return false;
         }
+
         return true;
     }
 }

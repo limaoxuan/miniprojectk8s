@@ -65,7 +65,7 @@ public class PreFilter extends ZuulFilter {
         if (token == null) {
             ResultVO<String> resultVO = new ResultVO<>();
             resultVO.setData("{}");
-            resultVO.setMsg("Api key invalid");
+            resultVO.setMsg("token  invalid");
             resultVO.setCode(0);
             String resJsonString = this.gson.toJson(resultVO);
             output(ctx, resJsonString);
@@ -78,12 +78,15 @@ public class PreFilter extends ZuulFilter {
         ResponseEntity<String> request1 = request(authUrl +"/valid_token", jsonStr);
         System.out.println("sds");
         System.out.println(request1.getBody());
-        ResultVO<Boolean> booleanResultVO = gson.fromJson(request1.getBody(), ResultVO.class);
-        String resJsonString = this.gson.toJson(booleanResultVO);
+        ResultVO<String > tokenResultVO = gson.fromJson(request1.getBody(), ResultVO.class);
+        String resJsonString = this.gson.toJson(tokenResultVO);
         System.out.println(resJsonString);
         System.out.println("resJsonString");
-        if (booleanResultVO.getCode() == 1) {
+        if (tokenResultVO.getCode() == 1) {
             output(ctx, resJsonString);
+        } else {
+            ctx.addZuulRequestHeader("api-key", apiKey);
+            ctx.addZuulRequestHeader("user-email",tokenResultVO.getData());
         }
         System.out.println("ds");
         return null;
