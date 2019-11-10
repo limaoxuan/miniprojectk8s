@@ -1,0 +1,9 @@
+server:
+  port: 10005
+
+paypalUrl: http://localhost:10006/paypal
+bankUrl: http://localhost:10007/bank
+creditUrl: http://localhost:10008/credit
+orderUrl: http://localhost:10004/order/update
+api:
+  key: ea-max-secret

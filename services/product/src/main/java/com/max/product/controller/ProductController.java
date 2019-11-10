@@ -43,15 +43,19 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public ResultVO<?> updateProduct(@RequestBody Product product) {
-        Product product1 = productService.getOne(product.getId());
-        if (product1.getProductStock() < product.getProductStock()) {
+    public ResultVO<?> updateProduct(@RequestBody List<Product> products) {
 
-            return ResultMessage.normalReturn("beyond stock");
+        for (Product product : products) {
+            Product product1 = productService.getOne(product.getId());
+            if (product1.getProductStock() < product.getProductStock()) {
+
+                return ResultMessage.normalReturn("beyond stock");
+            }
+            Integer stock = product1.getProductStock() - product.getProductStock();
+            product.setProductStock(stock);
+            productService.save(product);
         }
-        Integer stock = product1.getProductStock() - product.getProductStock();
-        product.setProductStock(stock);
-        productService.save(product);
+
         return ResultMessage.normalReturn();
     }
 

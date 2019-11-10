@@ -1,0 +1,4 @@
+server:
+  port: 10008
+api:
+  key: ea-max-secret

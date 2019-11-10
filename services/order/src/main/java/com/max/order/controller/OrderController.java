@@ -36,6 +36,14 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResultVO<?> update(@RequestBody Order order) {
+        Order newOrder = orderService.getOne(order.getId());
+        newOrder.setStatus(order.getStatus());
+        orderService.save(newOrder);
+        return ResultMessage.normalReturn();
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResultVO<?> order(@RequestHeader("user-email") String email, @RequestBody Order order) {
 
@@ -53,20 +61,17 @@ public class OrderController {
         System.out.println("newOrder");
         System.out.println(newOrder);
         orderService.save(newOrder);
-//
-//        for (OrderProduct orderProduct : order.getOrderProductList()) {
-//            Product product = new Product();
-//            product.setId(orderProduct.getProductId());
-//            product.setUnits(orderProduct.getUnits());
-//            ResponseEntity<String> responseEntity1 = request(productUrl + "/update", gson.toJson(product));
-//
-//        }
-//
-//        ResponseEntity<String> responseEntity2 = request(paymentUrl + "/" + order.getPaymentMethod(), "");
-//
-//        System.out.println(responseEntity2.getBody());
-//        order.setStatus("shipping");
-//        orderService.save(order);
+
+        List<Product> products = new ArrayList<>();
+        for (OrderProduct orderProduct : order.getOrderProductList()) {
+            Product product = new Product();
+            product.setId(orderProduct.getProductId());
+            product.setProductStock(orderProduct.getUnits());
+            products.add(product);
+        }
+
+        request(productUrl + "/update", gson.toJson(products));
+
 
         return ResultMessage.normalReturn();
     }
