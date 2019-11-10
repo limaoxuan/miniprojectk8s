@@ -78,7 +78,7 @@ public class PreFilter extends ZuulFilter {
         ResponseEntity<String> request1 = request(authUrl +"/valid_token", jsonStr);
         System.out.println("sds");
         System.out.println(request1.getBody());
-        ResultVO<String > tokenResultVO = gson.fromJson(request1.getBody(), ResultVO.class);
+        ResultVO<String> tokenResultVO = gson.fromJson(request1.getBody(), ResultVO.class);
         String resJsonString = this.gson.toJson(tokenResultVO);
         System.out.println(resJsonString);
         System.out.println("resJsonString");

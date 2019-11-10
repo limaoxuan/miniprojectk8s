@@ -5,7 +5,7 @@ spring:
     database: mysql
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   datasource:

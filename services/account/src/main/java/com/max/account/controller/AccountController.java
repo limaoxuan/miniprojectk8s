@@ -1,9 +1,12 @@
 package com.max.account.controller;
 
 import com.google.gson.Gson;
+import com.max.account.VO.ResultMessage;
 import com.max.account.VO.ResultVO;
 import com.max.account.domain.Account;
+import com.max.account.domain.Address;
 import com.max.account.service.AccountService;
+import com.max.account.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -33,26 +36,29 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    AddressService addressService;
+
     @RequestMapping("/hello")
     public String hello() {
         return "hello";
     }
 
     @PostMapping("/register")
-    public ResultVO<String> register(@RequestBody Account account) {
+    public ResultVO<?> register(@RequestBody Account account) {
         accountService.save(account);
-        ResultVO<String> resultVO = new ResultVO<>();
-        resultVO.setCode(0);
-        resultVO.setMsg("success");
-        resultVO.setData("{}");
-        return resultVO;
+        return ResultMessage.normalReturn();
     }
 
-    public String  addAddress(@RequestHeader("user-email") String email){
+    @RequestMapping(value = "/email",method = RequestMethod.POST)
+    public ResultVO<?>  addAddress(@RequestHeader("user-email") String email,@RequestBody Address address){
 
         System.out.println(email);
+        Account account = accountService.findAccountByEmail(email);
+        address.setAccount(account);
+        addressService.save(address);
 
-        return email;
+        return ResultMessage.normalReturn();
     }
 
     @PostMapping("/login")
