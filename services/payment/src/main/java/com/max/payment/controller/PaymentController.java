@@ -39,8 +39,8 @@ public class PaymentController {
                 break;
         }
 
-        String message =template.postForObject(paypalUrl+"pay",paymentUrl + "/pay",String.class);
-        
+        String message =template.postForObject(paymentUrl+"/pay","",String.class);
+
         return NormalVO.normalReturn(message);
 
 
