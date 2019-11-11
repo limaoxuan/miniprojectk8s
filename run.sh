@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 DIR="${PWD}"
 echo ${DIR}
-cd ${DIR}/env/
-echo ${PWD}
+
 /bin/sh ${DIR}/env/deploy.sh
 
 
-# cd ${DIR}/services/gateway
-# /bin/sh deploy.sh
+/bin/sh ${DIR}/services/gateway/deploy.sh
+
+
+/bin/sh ${DIR}/services/account/deploy.sh
+
+
+/bin/sh ${DIR}/services/auth/deploy.sh
 
 
 # cd ${DIR}/services/account
