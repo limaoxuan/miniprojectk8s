@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ea-account
+  name: ea-payment
   labels:
-    app: ea-account
+    app: ea-payment
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
-      name: ea-account
+      name: ea-payment
       labels:
-        app: ea-account
+        app: ea-payment
     spec:
       containers:
-        - name: ea-account
-          image: life14ok/ea-account
+        - name: ea-payment
+          image: life14ok/ea-payment
           ports:
-            - containerPort: 10002
+            - containerPort: 10005
           env:
             - name: "API-KEY"
               valueFrom:
@@ -24,23 +24,23 @@ spec:
                   name: ea-secret
                   key: service-api-key
             - name: "PORT"
-              value: "10002"
+              value: "10005"
             - name: "DATABASE_HOST"
               value: "ea-mysql-service"
             - name: "DATABASE_PORT"
               value: "3306"
   selector:
     matchLabels:
-      app: ea-account
+      app: ea-payment
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ea-account-service
+  name: ea-payment-service
 spec:
   selector:
-    app: ea-account
+    app: ea-payment
   ports:
-    - port: 10002
-      targetPort: 10002
+    - port: 10005
+      targetPort: 10005
   type: ClusterIP

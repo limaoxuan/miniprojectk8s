@@ -1,0 +1,9 @@
+server:
+  port: ${PORT:10005}
+
+paypalUrl: http://ea-paypal-service:10006/paypal
+bankUrl: http://ea-bank-service:10007/bank
+creditUrl: http://ea-credit-service:10008/credit
+orderUrl: http://ea-order-service:10004/order/update
+api:
+  key: ${API-KEY}

@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:10002}
+  port: ${PORT:10003}
 spring:
   jpa:
     database: mysql
@@ -17,5 +17,3 @@ router:
     url: http://ea-auth-service:10001
 api:
   key: ${API-KEY}
-
-

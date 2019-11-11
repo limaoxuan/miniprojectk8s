@@ -1,0 +1,4 @@
+server:
+  port: ${PORT:10008}
+api:
+  key: ${API-KEY}

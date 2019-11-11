@@ -16,8 +16,13 @@ spec:
         - name: ea-gateway
           image: life14ok/ea-gateway
           ports:
-            - containerPort: 9000
+            - containerPort: 10000
           env:
+            - name: "API-KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: ea-secret
+                  key: service-api-key
             - name: "PORT"
               value: "10000"
   selector:
@@ -32,7 +37,7 @@ spec:
   selector:
     app: ea-gateway
   ports:
-    - port: 9000
+    - port: 10000
       targetPort: 10000
       nodePort: 30005
   type: NodePort

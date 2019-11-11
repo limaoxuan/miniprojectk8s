@@ -22,6 +22,6 @@ zuul:
 auth-url: http://localhost:10001/auth
 
 exclude-routes:
-    urls: http://localhost:10000/api/account/login,http://localhost:10000/api/account/register
+    urls: /api/account/login,/api/account/register
 api:
   key: ea-max-secret

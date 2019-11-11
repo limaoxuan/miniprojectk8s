@@ -1,5 +1,15 @@
+
+
+
 server:
-  port: ${PORT:10002}
+  port: ${PORT:10004}
+
+
+payment:
+  url: http://ea-payment-service:10005/payment
+product:
+  url: http://ea-product-service:10003/product
+
 spring:
   jpa:
     database: mysql
@@ -17,5 +27,3 @@ router:
     url: http://ea-auth-service:10001
 api:
   key: ${API-KEY}
-
-

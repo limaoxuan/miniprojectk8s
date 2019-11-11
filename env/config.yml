@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: ea-config
 data:
-  key: 
+  account-port: ''

@@ -111,7 +111,7 @@ public class PreFilter extends ZuulFilter {
         for (String str : excludeUrls) {
             System.out.println(str);
             System.out.println(url);
-            if (str.equals(url)) {
+            if (url.contains(str)) {
                 return true;
             }
         }

@@ -3,16 +3,26 @@ server:
 
 zuul:
   routes:
-    example:
-      path: /api/example/**
-      url: http://test-service:8099/hello
+#    example:
+#      path: /api/example/**
+#      url: http://test-service:8099/hello
     account:
       path: /api/account/**
-      url: http://ea-account-service:9002/account/
+      url: http://ea-account-service:10002/account/
+    payment:
+      path: /api/payment/**
+      url: http://ea-payment-service:10005/payment/
+    product:
+      path: /api/product/**
+      url: http://ea-product-service:10003/product/
+    order:
+      path: /api/order/**
+      url: http://ea-order-service:10004/order/
 
 auth-url: http://ea-auth-service:10001
+
 exclude-routes:
-  urls: http://localhost:10000/api/account/login,http://localhost:10000/api/account/register
+  urls: /api/account/login,/api/account/register
 
 api:
   key: ${API-KEY}

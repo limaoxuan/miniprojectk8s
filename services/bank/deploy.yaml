@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ea-auth
+  name: ea-bank
   labels:
-    app: ea-auth
+    app: ea-bank
 spec:
   replicas: 1
   template:
     metadata:
-      name: ea-auth
+      name: ea-bank
       labels:
-        app: ea-auth
+        app: ea-bank
     spec:
       containers:
-        - name: ea-auth
-          image: life14ok/ea-auth
+        - name: ea-bank
+          image: life14ok/ea-bank
           ports:
-            - containerPort: 10001
+            - containerPort: 10007
           env:
             - name: "API-KEY"
               valueFrom:
@@ -24,19 +24,23 @@ spec:
                   name: ea-secret
                   key: service-api-key
             - name: "PORT"
-              value: "10001"
+              value: "10007"
+            - name: "DATABASE_HOST"
+              value: "ea-mysql-service"
+            - name: "DATABASE_PORT"
+              value: "3306"
   selector:
     matchLabels:
-      app: ea-auth
+      app: ea-bank
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ea-auth-service
+  name: ea-bank-service
 spec:
   selector:
-    app: ea-auth
+    app: ea-bank
   ports:
-    - port: 10001
-      targetPort: 10001
-  type: ClusterIP # internal
+    - port: 10007
+      targetPort: 10007
+  type: ClusterIP
