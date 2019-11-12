@@ -4,6 +4,10 @@
 
 
 
+Git: https://github.com/limaoxuan/miniprojectk8s
+
+
+
 ![image](https://github.com/limaoxuan/miniprojectk8s/blob/master/simple%20architecture%20.png)
 
 
