@@ -2,11 +2,17 @@
 
 
 
+![](simple architecture .png)
+
 
 
 #### env:
 
 Google cloud or minikube
+
+
+
+
 
 ------
 
