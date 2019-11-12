@@ -2,7 +2,7 @@
 
 
 
-![](simple architecture .png)
+![](./simple architecture .png)
 
 
 
