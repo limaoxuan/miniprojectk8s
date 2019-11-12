@@ -2,7 +2,9 @@
 
 
 
-![](simple architecture .png)
+```
+![Screenshot](simple architecture .png)
+```
 
 
 
