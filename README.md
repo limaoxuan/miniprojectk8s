@@ -10,11 +10,11 @@ Google cloud or minikube
 
 ------
 
-#### HOW TO RUN
+#### HOW TO RUN 
 
-------
+If you have any questions please let me know. I will fix it as soon as possible
 
-##### Minikube
+#### Minikube
 
 sh init_minikube.sh
 
