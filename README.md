@@ -1,11 +1,15 @@
+---
+typora-root-url: ./simple architecture .png
+---
+
 # miniprojectk8s
 
 
 
 
-```
-![Screenshot](simple architecture .png)
-```
+
+![](/../simple architecture .png)
+
 
 #### env:
 
