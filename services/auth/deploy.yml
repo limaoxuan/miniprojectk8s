@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ea-auth
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       name: ea-auth

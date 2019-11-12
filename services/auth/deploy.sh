@@ -1,2 +1,2 @@
 kubectl delete -f deploy.yml
-kubectl apply -f deploy.yml
+kubectl create -f deploy.yml

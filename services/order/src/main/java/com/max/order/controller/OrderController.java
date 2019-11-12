@@ -8,6 +8,7 @@ import com.max.order.domin.Order;
 import com.max.order.domin.OrderProduct;
 import com.max.order.domin.Product;
 import com.max.order.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -43,6 +44,18 @@ public class OrderController {
         orderService.save(newOrder);
         return ResultMessage.normalReturn();
     }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResultVO<?> getOrder(@RequestHeader("user-email") String email) {
+        List<Order> all = orderService.getAll(email);
+        ResultVO<List<Order>> resultVO = new ResultVO<>();
+        resultVO.setCode(0);
+        resultVO.setMsg("success");
+        resultVO.setData(all);
+
+        return resultVO;
+    }
+
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResultVO<?> order(@RequestHeader("user-email") String email, @RequestBody Order order) {

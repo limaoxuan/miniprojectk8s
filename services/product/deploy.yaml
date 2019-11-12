@@ -43,4 +43,4 @@ spec:
   ports:
     - port: 10003
       targetPort: 10003
-  type: ClusterIP
+  type: LoadBalancer

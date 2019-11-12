@@ -1,21 +1,22 @@
 package com.max.gateway.filter;
 
 import com.google.gson.Gson;
+import com.max.gateway.VO.MessageVO;
 import com.max.gateway.VO.ResultVO;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import tools.JWTUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 
 public class PreFilter extends ZuulFilter {
     @Value("${exclude-routes.urls}")
@@ -37,6 +38,7 @@ public class PreFilter extends ZuulFilter {
         return "pre";
     }
 
+
     @Override
     public int filterOrder() {
         return 0;
@@ -48,8 +50,9 @@ public class PreFilter extends ZuulFilter {
     }
 
     @Override
-    public Object run() throws ZuulException{
+    public Object run() {
 
+//        try {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String url = request.getRequestURL().toString();
@@ -60,39 +63,31 @@ public class PreFilter extends ZuulFilter {
             System.out.println("pass");
             return null;
         }
-        System.out.println("sds");
         String token = request.getHeader("token");
         if (token == null) {
-            ResultVO<String> resultVO = new ResultVO<>();
-            resultVO.setData("{}");
-            resultVO.setMsg("token  invalid");
-            resultVO.setCode(0);
-            String resJsonString = this.gson.toJson(resultVO);
+            String resJsonString = this.gson.toJson(MessageVO.normalReturn("token  invalid"));
             output(ctx, resJsonString);
             return null;
         }
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put("token", token);
-        String jsonStr = gson.toJson(map);
-        ResponseEntity<String> request1 = request(authUrl +"/valid_token", jsonStr);
-        System.out.println("sds");
-        System.out.println(request1.getBody());
-        ResultVO<String> tokenResultVO = gson.fromJson(request1.getBody(), ResultVO.class);
-        String resJsonString = this.gson.toJson(tokenResultVO);
-        System.out.println(resJsonString);
-        System.out.println("resJsonString");
-        if (tokenResultVO.getCode() == 1) {
-            output(ctx, resJsonString);
-        } else {
+
+        JWTUtil jwtUtil = new JWTUtil();
+        try {
+            Claims claims = jwtUtil.parseJWT(token);
+            System.out.println(claims.getSubject());
             ctx.addZuulRequestHeader("api-key", apiKey);
-            ctx.addZuulRequestHeader("user-email",tokenResultVO.getData());
+            ctx.addZuulRequestHeader("user-email", claims.getSubject());
+        } catch (Exception e) {
+            String resJsonString = this.gson.toJson(MessageVO.normalReturn("token  invalid"));
+            output(ctx, resJsonString);
+            return null;
         }
-        System.out.println("ds");
+
+
         return null;
     }
 
-    private void output(RequestContext ctx , String resJsonString) {
+    private void output(RequestContext ctx, String resJsonString) {
         ctx.setSendZuulResponse(false);
         ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         PrintWriter out = null;
