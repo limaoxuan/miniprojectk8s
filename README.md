@@ -8,11 +8,11 @@
 
 Google cloud or minikube
 
-
+------
 
 #### HOW TO RUN
 
-
+------
 
 ##### Minikube
 
@@ -20,7 +20,7 @@ sh init_minikube.sh
 
 sh run.sh
 
-
+------
 
 ##### Google cloud
 
@@ -32,7 +32,7 @@ gcloud container clusters xxxxxxxx
 
 sh run.sh
 
-
+------
 
 
 
@@ -40,7 +40,7 @@ sh run.sh
 
 Mysql
 
-
+------
 
 #### Secret
 
@@ -48,7 +48,7 @@ Client JWT
 
 Micservices    secrets.yaml API-KEY
 
-
+------
 
 #### how to get ip
 
@@ -60,7 +60,7 @@ minikube service ea-gateway-service --url
 
 using 30005 port to test.
 
-
+------
 
 ##### Google Cloud
 
@@ -72,7 +72,7 @@ Ip: 35.222.223.145:30005
 
 
 
-
+------
 
 API:
 
@@ -86,7 +86,7 @@ http://35.222.223.145:30005/api/account/register
 
 
 
-
+------
 
 #### Login
 
@@ -103,6 +103,8 @@ http://35.222.223.145:30005/api/account/login
 **Below request must add this token in header**
 
 
+
+------
 
 #### Product
 
@@ -124,7 +126,7 @@ http://35.222.223.145:30005/api/product/
 
 
 
-
+------
 
 #### Order
 
@@ -146,7 +148,7 @@ add order
 
 
 
-
+------
 
 #### Payment
 
@@ -170,13 +172,7 @@ http://35.222.223.145:30005/api/payment/credit/1
 
 
 
-
-
-
-
-
-
-
+------
 
 #### Internal container port
 
